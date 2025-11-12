@@ -44,18 +44,18 @@ export default function BotonEmergenciaScreen({ navigation }) {
 
     useEffect(() => {
         const loadInitialData = async () => {
-            // 1. Pedir permisos de ubicación
+            // Pedir permisos de ubicación
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 Alert.alert('Permiso Denegado', 'Necesitamos acceso a su ubicación para enviar la alerta de emergencia.');
                 setIsLoading(false);
                 return;
             }
-            // 2. Obtener la ubicación actual (una sola vez)
+            // Obtener la ubicación actual (una sola vez)
             let lastLocation = await Location.getCurrentPositionAsync({});
             setLocation(lastLocation.coords);
 
-            // 3. Cargar contactos de emergencia desde Firestore
+            // Cargar contactos de emergencia desde Firestore
             const user = auth.currentUser;
             if (user) {
                 const userDocRef = doc(db, 'users', user.uid);
@@ -185,9 +185,7 @@ export default function BotonEmergenciaScreen({ navigation }) {
                     const supported = await Linking.canOpenURL(url);
 
                     if (supported) {
-                        // NOTA: Esto abrirá WhatsApp. El usuario debe presionar 'Enviar' por cada contacto.
-                        // Para automatizar esto, se requeriría una Cloud Function (Firebase Functions)
-                        // que use un servicio de envío de SMS o WhatsApp (ej. Twilio), lo cual es más complejo
+                        // Esto abrirá WhatsApp. El usuario debe presionar 'Enviar' por cada contacto.
                         await Linking.openURL(url);
                     } else {
                         console.warn(`No se pudo abrir WhatsApp para ${contact.name}. Verifique la aplicación.`);
@@ -203,7 +201,7 @@ export default function BotonEmergenciaScreen({ navigation }) {
             );
         }
 
-        // Resetear la UI al final, independientemente del éxito del envío
+        // Resetear UI al final, independientemente del éxito del envío
         setEmergencyActive(false);
         setCountdown(10);
         progressAnim.setValue(0);
@@ -242,7 +240,6 @@ export default function BotonEmergenciaScreen({ navigation }) {
                         </Text>
                     </View>
 
-                    {/* Emergency Button Section */}
                     <View style={styles.emergencySection}>
                         {emergencyActive ? (
                             <>
@@ -322,7 +319,6 @@ export default function BotonEmergenciaScreen({ navigation }) {
                         )}
                     </View>
 
-                    {/* Information Section */}
                     <View style={styles.infoSection}>
                         <View style={styles.infoHeader}>
                             <Ionicons name="information-circle" size={24} color="#49688d" />
