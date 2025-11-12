@@ -15,13 +15,11 @@ import MapView, { Marker, Circle, PROVIDER_GOOGLE, Callout } from 'react-native-
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 
-// FIREBASE IMPORTS
 import { db } from '../firebase';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 
 const { width, height } = Dimensions.get('window');
 
-// Default location (Guadalajara, Jalisco)
 const DEFAULT_REGION = {
     latitude: 20.6736,
     longitude: -103.3446,
@@ -29,7 +27,7 @@ const DEFAULT_REGION = {
     longitudeDelta: 0.05,
 };
 
-// Importar JSON (Make sure this path is correct: '../Datos.json')
+// Importar JSON 
 const crimeData = require('../Datos.json');
 const REPORT_COLLECTION = 'citizenReports';
 
@@ -45,8 +43,6 @@ const Mapa = () => {
 
     const [citizenReports, setCitizenReports] = useState([]);
 
-
-    // Memoized data processing (Kept for performance)
     const { riskZones, statistics } = useMemo(() => {
         if (!dataLoaded) return { riskZones: [], statistics: {} };
 
@@ -132,7 +128,7 @@ const Mapa = () => {
     }, [dataLoaded]);
 
     const puntosSeguros = useMemo(() => [
-        // Guadalajara Safe Points
+
         {
             id: 1,
             nombre: "Comisaría Centro Histórico",
@@ -169,7 +165,7 @@ const Mapa = () => {
             telefono: "333-123-4572"
         },
 
-        // Zapopan Safe Points
+
         {
             id: 6,
             nombre: "Comisaría Zapopan Centro",
@@ -199,7 +195,7 @@ const Mapa = () => {
             telefono: "333-123-4577"
         },
 
-        // Tlaquepaque Safe Points
+
         {
             id: 10,
             nombre: "Comisaría Tlaquepaque",
@@ -222,7 +218,7 @@ const Mapa = () => {
             telefono: "333-123-4586"
         },
 
-        // Tonalá Safe Points
+
         {
             id: 13,
             nombre: "Comisaría Tonalá",
@@ -238,7 +234,7 @@ const Mapa = () => {
             telefono: "333-123-4588"
         },
 
-        // Tlajomulco puntos seguros
+
         {
             id: 15,
             nombre: "Comisaría Tlajomulco",
@@ -254,7 +250,7 @@ const Mapa = () => {
             telefono: "333-123-4590"
         },
 
-        // El Salto puntos seguros
+
         {
             id: 17,
             nombre: "Comisaría El Salto",
@@ -270,7 +266,7 @@ const Mapa = () => {
             telefono: "333-123-4592"
         },
 
-        // Ixtlahuacán de los Membrillos puntos seguros
+
         {
             id: 19,
             nombre: "Policía Ixtlahuacán",
@@ -279,7 +275,7 @@ const Mapa = () => {
             telefono: "333-123-4593"
         },
 
-        // Juanacatlán puntos seguros
+
         {
             id: 20,
             nombre: "Seguridad Juanacatlán",
@@ -289,7 +285,6 @@ const Mapa = () => {
         }
     ], []);
 
-    // Function to get report color
     const getReportColor = useCallback((category) => {
         if (category === 'Seguridad') {
             return '#e74c3c'; // Red (High risk)
@@ -384,7 +379,6 @@ const Mapa = () => {
         });
     }, [getRecommendationsByRiskLevel, getZoneIcon]);
 
-    // Function to handle Citizen Report click
     const handleReportPress = useCallback((report) => {
         // Center map on the pressed report
         if (mapRef.current && report.coordinates) {
@@ -398,7 +392,6 @@ const Mapa = () => {
 
         const badgeColor = getReportColor(report.category);
 
-        // Use the same selectedZone structure to display the report info
         setSelectedZone({
             id: report.id,
             nombre: `Reporte: ${report.title}`,
@@ -444,7 +437,6 @@ const Mapa = () => {
                     return;
                 }
 
-                // Increased accuracy and added timeout
                 let location = await Location.getCurrentPositionAsync({
                     accuracy: Location.Accuracy.BestForNavigation,
                     timeout: 10000,
@@ -459,7 +451,7 @@ const Mapa = () => {
                 });
 
             } catch (error) {
-                // Error handling to use default location
+
                 console.error("Error obteniendo ubicación GPS:", error);
                 setErrorMsg('Error obteniendo ubicación. Usando ubicación predeterminada.');
                 // setInitialRegion(DEFAULT_REGION); // Ya es el valor inicial
@@ -470,7 +462,6 @@ const Mapa = () => {
         })();
     }, []);
 
-    // Firestore Synchronization useEffect
     useEffect(() => {
         const q = query(
             collection(db, REPORT_COLLECTION),
@@ -521,7 +512,7 @@ const Mapa = () => {
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
 
-            {/* Header / Title */}
+            {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.title}>Mapa de Riesgo AMG</Text>
                 <Text style={styles.subtitle}>
@@ -535,26 +526,24 @@ const Mapa = () => {
                 </Text>
             </View>
 
-            {/* Map Container */}
             <View style={styles.mapContainer}>
                 {initialRegion ? (
                     <MapView
                         ref={mapRef}
                         style={styles.map}
                         initialRegion={initialRegion}
-                        // **IMPORTANTE:** Se remueve la prop `region` para hacerlo no controlado y permitir el scroll/zoom del usuario.
                         provider={PROVIDER_GOOGLE}
                         showsUserLocation={true}
                         showsMyLocationButton={false}
                         showsCompass={true}
-                        zoomControlEnabled={false} // Se remueve para usar el zoom de dos dedos
+                        zoomControlEnabled={false} 
                         zoomEnabled={true}
                         scrollEnabled={true}
                         loadingEnabled={true}
                         loadingIndicatorColor="#49688d"
                         loadingBackgroundColor="#f8f9fa"
                     >
-                        {/* Risk Zone Circles (Only Alto and Medio) */}
+
                         {riskZones.map(zone => (
                             (zone.tipo === 'alto' || zone.tipo === 'medio') && (
                                 <Circle
@@ -568,7 +557,6 @@ const Mapa = () => {
                             )
                         ))}
 
-                        {/* Risk Zone Markers (Only Alto and Medio) */}
                         {riskZones.map(zone => (
                             (zone.tipo === 'alto' || zone.tipo === 'medio') && (
                                 <Marker
@@ -588,19 +576,17 @@ const Mapa = () => {
                             )
                         ))}
 
-                        {/* Citizen Reports Markers (Dynamic Color + Callout) */}
                         {citizenReports.map(report => (
                             <Marker
                                 key={report.id}
                                 coordinate={report.coordinates}
                                 onPress={() => handleReportPress(report)}
                             >
-                                {/* Report Marker Style */}
+
                                 <View style={[styles.reportMarker, { backgroundColor: getReportColor(report.category) }]}>
                                     <Ionicons name="alert-circle" size={16} color="#fff" />
                                 </View>
 
-                                {/* Callout shows minimal info on tap */}
                                 <Callout tooltip={true} style={{ zIndex: 1 }}>
                                     <View style={styles.calloutContainer}>
                                         <Text style={styles.calloutTitle}>{report.title}</Text>
@@ -611,7 +597,6 @@ const Mapa = () => {
                             </Marker>
                         ))}
 
-                        {/* Safe Points Markers */}
                         {puntosSeguros.map(point => (
                             <Marker
                                 key={`safe-${point.id}`}
@@ -636,12 +621,10 @@ const Mapa = () => {
                     </View>
                 )}
 
-                {/* Center User Button - Positioned in a modern way */}
                 <TouchableOpacity style={styles.centerButton} onPress={centerOnUser}>
                     <Ionicons name="locate" size={20} color="#49688d" />
                 </TouchableOpacity>
 
-                {/* General Info Card - Positioned absolutely near the bottom/left */}
                 {riskZones.length > 0 && (
                     <View style={styles.generalInfoCard}>
                         <View style={styles.infoCard}>
@@ -656,14 +639,13 @@ const Mapa = () => {
                     </View>
                 )}
 
-                {/* Symbology - Positioned absolutely at the bottom center of the map view */}
                 <View style={styles.symbologyOverlay}>
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.symbologyScrollContent}
                     >
-                        {/* Risk Zones */}
+
                         <View style={styles.symbologySection}>
                             <Text style={styles.symbologySubtitle}>Zonas de Riesgo</Text>
                             <View style={styles.symbologyItems}>
@@ -682,7 +664,6 @@ const Mapa = () => {
                             </View>
                         </View>
 
-                        {/* Citizen Reports */}
                         <View style={styles.symbologySection}>
                             <Text style={styles.symbologySubtitle}>Reportes Ciudadanos</Text>
                             <View style={styles.symbologyItems}>
@@ -701,7 +682,6 @@ const Mapa = () => {
                             </View>
                         </View>
 
-                        {/* Safe Points */}
                         <View style={styles.symbologySection}>
                             <Text style={styles.symbologySubtitle}>Puntos Seguros</Text>
                             <View style={styles.symbologyItems}>
@@ -728,10 +708,9 @@ const Mapa = () => {
                     </ScrollView>
                 </View>
 
-                {/* Information Panel - Fixed height, slides over the symbology */}
                 {selectedZone && (
                     <View style={styles.infoPanel}>
-                        {/* Panel Header */}
+
                         <View style={styles.infoHeader}>
                             <View style={styles.zoneHeader}>
                                 <Ionicons
@@ -748,7 +727,6 @@ const Mapa = () => {
                             </TouchableOpacity>
                         </View>
 
-                        {/* Panel Body */}
                         <ScrollView style={styles.recommendationsScroll} showsVerticalScrollIndicator={false}>
                             {selectedZone.tipo !== 'reporte' ? (
                                 // Content for Risk Zones
@@ -762,7 +740,7 @@ const Mapa = () => {
                                     <Text style={styles.recommendationsTitle}>Recomendaciones de Seguridad:</Text>
                                 </>
                             ) : (
-                                // Content for Citizen Reports
+
                                 <>
                                     <View style={[styles.riskBadge, { backgroundColor: selectedZone.color }]}>
                                         <Text style={styles.riskBadgeText}>
@@ -774,7 +752,6 @@ const Mapa = () => {
                                 </>
                             )}
 
-                            {/* Recommendations/Details List */}
                             {selectedZone.recomendaciones.map((rec, index) => (
                                 <View key={index} style={styles.recommendationItem}>
                                     <Ionicons
@@ -853,14 +830,14 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
-        zIndex: 10, // Ensure button is above the map
+        zIndex: 10, 
     },
-    // Contenedor para la tarjeta de info general (parte superior izquierda)
+
     generalInfoCard: {
         position: 'absolute',
         top: 16,
         left: 16,
-        right: 80, // Leave space for center button
+        right: 80, 
         zIndex: 10,
     },
     infoCard: {
@@ -891,13 +868,13 @@ const styles = StyleSheet.create({
         color: '#2c3e50',
         lineHeight: 14,
     },
-    // Contenedor para la simbología (parte inferior centrada)
+
     symbologyOverlay: {
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.95)', // Semitransparente para ver el mapa
+        backgroundColor: 'rgba(255, 255, 255, 0.95)', 
         paddingVertical: 12,
         paddingHorizontal: 16,
         borderTopLeftRadius: 16,
@@ -975,7 +952,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    // Info Panel (se superpone sobre la simbología)
+
     infoPanel: {
         position: 'absolute',
         bottom: 0, // Se ajusta la posición para que esté sobre la simbología
