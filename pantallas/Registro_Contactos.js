@@ -42,8 +42,6 @@ const Registro_Contactos = () => {
     const [loading, setLoading] = useState(true);
     const [userUid, setUserUid] = useState(null); // Almacena el UID aquí
 
-    // FUNCIÓN 1: CARGA INICIAL DE CONTACTOS (useEffect)
-
     useEffect(() => {
         const fetchContacts = async () => {
             const user = auth.currentUser;
@@ -79,14 +77,14 @@ const Registro_Contactos = () => {
             return;
         }
 
-        // 1. Crea el nuevo objeto de contacto con un ID
+        // Crea el nuevo objeto de contacto con un ID
         const newContactItem = {
             id: Date.now().toString(),
             name: newContact.name,
             phone: newContact.phone
         };
 
-        // 2. Sintaxis de array CORREGIDA
+        // Sintaxis de array 
         const updatedContacts = [...contacts, newContactItem];
 
         setLoading(true); // Muestra loading mientras guarda
@@ -114,10 +112,10 @@ const Registro_Contactos = () => {
                     //  La función onPress debe ser asíncrona
                     onPress: async () => {
                         setLoading(true);
-                        // 1. Crea el array filtrado
+                        // Crea el array filtrado
                         const updatedContacts = contacts.filter(contact => contact.id !== id);
 
-                        // 2. Llama al guardado en Firebase
+                        // Llama al guardado en Firebase
                         const success = await saveContactsToFirebase(updatedContacts, userUid);
 
                         if (success) {
@@ -171,7 +169,7 @@ const Registro_Contactos = () => {
                     contentContainerStyle={styles.scrollContainer}
                     showsVerticalScrollIndicator={false}
                 >
-                    {/* 1. HEADER */}
+                    {/* Header */}
                     <View style={styles.header}>
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>Contactos de Emergencia</Text>
@@ -181,14 +179,12 @@ const Registro_Contactos = () => {
                         </Text>
                     </View>
 
-                    {/* 2. FORMULARIO DE NUEVO CONTACTO */}
                     <View style={styles.formContainer}>
                         <View style={styles.formHeader}>
                             <Ionicons name="person-add" size={24} color="#49688d" />
                             <Text style={styles.formTitle}>Agregar Nuevo Contacto</Text>
                         </View>
 
-                        {/* Input Nombre */}
                         <View style={styles.inputContainer}>
                             <Ionicons name="person-outline" size={20} color="#7f8c8d" style={styles.inputIcon} />
                             <TextInput
@@ -239,7 +235,6 @@ const Registro_Contactos = () => {
                         </View>
                     </View>
 
-                    {/* 3. LISTA DE CONTACTOS REGISTRADOS */}
                     <View style={styles.contactsContainer}>
                         <View style={styles.contactsHeader}>
                             <Ionicons name="people" size={24} color="#49688d" />
@@ -270,7 +265,6 @@ const Registro_Contactos = () => {
                         )}
                     </View>
 
-                    {/* 4. INFORMACIÓN ADICIONAL (al final) */}
                     <View style={styles.infoContainer}>
                         <View style={styles.infoHeader}>
                             <Ionicons name="information-circle" size={20} color="#49688d" />
