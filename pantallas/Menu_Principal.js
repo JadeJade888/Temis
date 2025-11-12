@@ -40,7 +40,7 @@ export default function Menu_Principal({ navigation }) {
                 contentContainerStyle={styles.scrollContainer} 
                 showsVerticalScrollIndicator={false}
             >
-                {/* Encabezado Mejorado */}
+                {/* Header */}
                 <View style={styles.header}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>TEMIS</Text>
@@ -48,7 +48,6 @@ export default function Menu_Principal({ navigation }) {
                     <Text style={styles.subtitle}>Seguridad, precaución y prevención</Text>
                 </View>
 
-                {/* Grid de opciones mejorado */}
                 <View style={styles.gridContainer}>
                     {/* Fila 1 */}
                     <View style={styles.row}>
@@ -136,7 +135,7 @@ export default function Menu_Principal({ navigation }) {
                     </View>
                 </View>
 
-                {/* Información adicional mejorada */}
+                {/* Información adicional */}
                 <View style={styles.infoContainer}>
                     <View style={styles.infoHeader}>
                         <Ionicons name="shield-checkmark" size={24} color="#49688d" />
@@ -313,7 +312,6 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         letterSpacing: 0.5,
     },
-    // Info Container Styles
     infoContainer: {
         backgroundColor: 'white',
         borderRadius: 20,
