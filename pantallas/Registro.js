@@ -23,7 +23,6 @@ export default function Registro({ navigation }) {
     const [loading, setLoading] = useState(false);
 
     const handleRegister = async () => {
-        // Validation
         if (!name || !email || !password || !confirmPassword) {
             Alert.alert('Error', 'Por favor, completa todos los campos');
             return;
@@ -39,7 +38,6 @@ export default function Registro({ navigation }) {
             return;
         }
 
-        // Basic email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             Alert.alert('Error', 'Por favor ingresa un correo electrónico válido');
@@ -49,11 +47,9 @@ export default function Registro({ navigation }) {
         setLoading(true);
 
         try {
-            // Create user in Firebase Authentication
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Save additional user data in Firestore
             await setDoc(doc(db, 'users', user.uid), {
                 name: name.trim(),
                 email: email.toLowerCase().trim(),
