@@ -50,10 +50,8 @@ function CustomDrawerContent(props) {
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
-    // Get current user info
     const user = auth.currentUser;
     if (user) {
-      // Fetch user data from Firestore
       const fetchUserData = async () => {
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
