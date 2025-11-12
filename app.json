@@ -1,29 +1,29 @@
 {
   "expo": {
-    "name": "aprender",
-    "slug": "aprender",
+    "name": "TEMIS",
+    "slug": "temis-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "icon": "./assets/TEMIS_Portada.png",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/Temis_Fondo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.temis.app"
     },
     "android": {
+      "package": "com.temis.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/TEMIS_Portada.png",
         "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      }
     }
   }
 }
