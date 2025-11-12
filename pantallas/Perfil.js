@@ -31,12 +31,11 @@ const Perfil = () => {
         genero: '',
         tipoSangre: '',
         alergias: '',
-        // Mantenemos como ARRAY para mapear la data de Firestore
+        // Mantenemos como arreglo para mapear la data de Firestore
         emergencyContacts: []
     });
 
     const [isEditing, setIsEditing] = useState(false);
-    // Estos estados deberían ser cargados de Firestore en el futuro, pero los mantenemos por ahora:
     const [notifications, setNotifications] = useState(true);
     const [locationSharing, setLocationSharing] = useState(true);
 
@@ -66,7 +65,6 @@ const Perfil = () => {
             locationSharingEnabled: locationSharing,
 
             profileCompleted: true,
-            // NOTA: emergencyContacts NO se actualiza aquí para evitar sobreescribir el array con la información del formulario de perfil.
         };
 
         console.log("DEBUG: Datos a enviar (Corregidos):", dataToUpdate);
@@ -377,13 +375,13 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     editButton: {
-        backgroundColor: '#49688d', // Color azul TEMIS
+        backgroundColor: '#49688d', 
     },
     saveButton: {
-        backgroundColor: '#27AE60', // Verde para guardar
+        backgroundColor: '#27AE60', 
     },
     cancelButton: {
-        backgroundColor: '#95A5A6', // Gris para cancelar
+        backgroundColor: '#95A5A6', 
     },
     actionButtonText: {
         color: '#fff',
