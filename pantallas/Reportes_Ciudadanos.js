@@ -11,7 +11,6 @@ import {
   collection,
   addDoc,
   query,
-  // where, // ❌ CLÁUSULA REMOVIDA PARA MOSTRAR TODOS LOS REPORTES
   onSnapshot,
   orderBy,
   updateDoc,
@@ -23,11 +22,11 @@ import {
 const REPORT_COLLECTION = 'citizenReports';
 
 const Reportes_Ciudadanos = () => {
-  // Estados de Carga y Reportes (Mantenidos)
+  // Estados de Carga y Reportes 
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Estados del formulario (Mantenidos)
+  // Estados del formulario 
   const [modalVisible, setModalVisible] = useState(false);
   const [editingReport, setEditingReport] = useState(null);
   const [viewModalVisible, setViewModalVisible] = useState(false);
@@ -44,7 +43,6 @@ const Reportes_Ciudadanos = () => {
   const [selectedReportForStatus, setSelectedReportForStatus] = useState(null);
   const [selectedReportForAuthorities, setSelectedReportForAuthorities] = useState(null);
 
-  // UBICACIÓN
   const [coords, setCoords] = useState(null); // { latitude, longitude }
   const [isLocating, setIsLocating] = useState(false);
 
@@ -66,17 +64,13 @@ const Reportes_Ciudadanos = () => {
   useEffect(() => {
     const user = auth.currentUser;
 
-    // 💡 MEJORA: Avisar si no hay usuario, aunque la consulta ya no use el UID, es buena práctica.
-    // Si quieres restringir la creación de reportes, el `handleSubmit` ya lo hace.
     if (!user) {
       Alert.alert("Alerta", "Es posible que algunas funciones estén restringidas sin iniciar sesión.");
-      // No hacemos return para que al menos intente cargar los reportes (ahora globales)
+      // No hace return para que al menos intente cargar los reportes (ahora globales)
       // setLoading(false);
       // return;
     }
 
-    // 🛠️ CORRECCIÓN CLAVE: Se remueve la cláusula where("userId", "==", user.uid)
-    // para mostrar TODOS los reportes de la colección 'citizenReports'.
     const q = query(
       collection(db, REPORT_COLLECTION),
       orderBy("timestamp", "desc")
@@ -113,7 +107,6 @@ const Reportes_Ciudadanos = () => {
     return unsubscribe;
   }, []);
 
-  // OBTENER UBICACIÓN GPS
   const getLocation = async () => {
     setIsLocating(true);
     try {
@@ -127,17 +120,17 @@ const Reportes_Ciudadanos = () => {
       let locationResult = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
       const { latitude, longitude } = locationResult.coords;
 
-      // Opcional: obtener la dirección legible (geocodificación inversa)
+      // Obtener la dirección legible (geocodificación inversa)
       let geocode = await Location.reverseGeocodeAsync({ latitude, longitude });
 
       const street = geocode[0]?.street || 'Ubicación Desconocida';
       const city = geocode[0]?.city || '';
       const region = geocode[0]?.region || '';
 
-      // 1. Guardar las coordenadas exactas
+      // Guardar las coordenadas exactas
       setCoords({ latitude, longitude });
 
-      // 2. Usar la dirección legible en el campo de texto (si está disponible)
+      // Usar la dirección legible en el campo de texto 
       setLocation(`${street}, ${city}, ${region}`);
 
       Alert.alert('Ubicación Obtenida', `Coordenadas GPS y dirección estimadas obtenidas. Coords: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
@@ -175,7 +168,6 @@ const Reportes_Ciudadanos = () => {
       return;
     }
 
-    // CAMBIO CLAVE: Incluir coordenadas en reportData
     const reportData = {
       title,
       description,
@@ -309,7 +301,7 @@ const Reportes_Ciudadanos = () => {
   };
 
 
-  // Lógica de imágenes (Mantenida)
+  // Lógica de imágenes 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
@@ -478,7 +470,6 @@ const Reportes_Ciudadanos = () => {
           </Text>
         </View>
 
-        {/* Add Report Button */}
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => { resetForm(); setModalVisible(true); }}
@@ -523,7 +514,6 @@ const Reportes_Ciudadanos = () => {
           </>
         )}
 
-        {/* Create/Edit Report Modal */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -609,7 +599,7 @@ const Reportes_Ciudadanos = () => {
                     </Text>
                   </TouchableOpacity>
 
-                  {/* Campo de texto de ubicación (Editable) */}
+                  {/* Campo de texto de ubicación */}
                   <View style={styles.inputGroup}>
                     <Ionicons name="location" size={20} color="#7f8c8d" style={styles.inputGroupIcon} />
                     <TextInput
@@ -679,7 +669,6 @@ const Reportes_Ciudadanos = () => {
           </View>
         </Modal>
 
-        {/* View Report Modal */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -808,7 +797,6 @@ const Reportes_Ciudadanos = () => {
           </View>
         </Modal>
 
-        {/* Status Change Modal (Mantenido) */}
         <Modal
           animationType="fade"
           transparent={true}
@@ -842,7 +830,6 @@ const Reportes_Ciudadanos = () => {
           </View>
         </Modal>
 
-        {/* Authorities Management Modal (Mantenido) */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -963,7 +950,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 25,
-    elevation: 6, // Sombra más pronunciada
+    elevation: 6, 
     shadowColor: '#49688d',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -1046,10 +1033,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     elevation: 4,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 }, // Sombra más suave
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    borderLeftWidth: 5, // Línea de acento a la izquierda
+    borderLeftWidth: 5, 
     borderLeftColor: '#49688d',
   },
   reportHeader: {
@@ -1135,7 +1122,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   viewIcon: {
-    backgroundColor: '#49688d', // Azul principal
+    backgroundColor: '#49688d', 
   },
   editIcon: {
     backgroundColor: '#f39c12',
@@ -1147,14 +1134,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#e74c3c',
   },
   actionText: {
-    fontSize: 11, // Tamaño más pequeño
+    fontSize: 11, 
     color: '#7f8c8d',
     fontWeight: '500',
     textAlign: 'center',
   },
   modalOverlay: {
     flex: 1,
-    justifyContent: 'flex-end', // El modal sube desde abajo
+    justifyContent: 'flex-end', 
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modalContent: {
@@ -1186,7 +1173,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 22, // Título más grande
+    fontSize: 22, 
     fontWeight: '700',
     color: '#2c3e50',
     marginLeft: 12,
@@ -1194,7 +1181,6 @@ const styles = StyleSheet.create({
   closeButton: {
     padding: 4,
   },
-  // Estilos de Input mejorados
   inputLabel: {
     fontSize: 15,
     fontWeight: '600',
@@ -1223,15 +1209,14 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 16,
     color: '#2c3e50',
-    paddingLeft: 45, // Espacio para el icono de ubicación si es necesario
+    paddingLeft: 45, 
   },
   textArea: {
     minHeight: 120,
     textAlignVertical: 'top',
     paddingTop: 14,
-    paddingLeft: 15, // Aquí no hay icono
+    paddingLeft: 15, 
   },
-  // Estilos de Geolocalización
   locationButton: {
     flexDirection: 'row',
     backgroundColor: '#49688d',
@@ -1250,7 +1235,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: 8,
   },
-  // Estilos de Categoría (Mantenidos)
   categoryContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -1279,7 +1263,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
   },
-  // Estilos de Imagen (Mantenidos)
   imageButtonsContainer: {
     flexDirection: 'row',
     marginBottom: 16,
@@ -1331,7 +1314,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     flexDirection: 'row',
-    backgroundColor: '#27ae60', // Verde para Guardar
+    backgroundColor: '#27ae60', 
     padding: 18,
     borderRadius: 12,
     alignItems: 'center',
@@ -1345,7 +1328,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: 8,
   },
-  // Estilos de Visualización de Reporte (Mejorados)
   viewTitle: {
     fontSize: 24,
     fontWeight: '800',
@@ -1402,7 +1384,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   closeViewButton: {
-    backgroundColor: '#49688d', // Color principal para cerrar
+    backgroundColor: '#49688d', 
     padding: 16,
     borderRadius: 12,
     alignItems: 'center',
@@ -1413,7 +1395,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
-  // Estilos de Modales Pequeños (Mantenidos)
   smallModalContent: {
     backgroundColor: 'white',
     borderRadius: 20,
@@ -1451,7 +1432,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#2c3e50',
   },
-  // Estilos de Autoridades (Mejorados)
   addAuthorityContainer: {
     flexDirection: 'row',
     marginBottom: 20,
