@@ -125,7 +125,6 @@ const Configuracion = () => {
                     contentContainerStyle={styles.scrollContent}
                     showsVerticalScrollIndicator={false}
                 >
-                    {/* Permisos de la Aplicación Section */}
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
                             <Ionicons name="shield-checkmark" size={22} color="#2c3e50" />
@@ -171,7 +170,6 @@ const Configuracion = () => {
                         </TouchableOpacity>
                     </View>
 
-                    {/* Preferencias de Contacto Section */}
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
                             <Ionicons name="people" size={22} color="#2c3e50" />
