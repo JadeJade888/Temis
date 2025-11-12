@@ -174,7 +174,7 @@ const Modulo_Informativo = () => {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header Mejorado */}
+        {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Módulo Informativo</Text>
           <Text style={styles.subtitle}>
