@@ -1,0 +1,48 @@
+# Temis
+
+Temis se diferencia y se justifica como una herramienta integral, proactiva y centrada en la confianza del usuario, llenando la brecha existente entre la necesidad de una respuesta segura a emergencias y la prevención activa de riesgos mediante la mejora de entorno ciudadano.
+
+## Metodología
+
+Temis usó la metodología Agile, por medio de sprints y fases de desarrollo, conjunto a prubas unitarias y de integración.
+
+## Funciones
+* Botón de emergencia
+* Módulo informativo
+* Mapa de zonas de riesgo
+* Reportes de incidentes
+* Creación de cuentas de usuario
+* Agregar contactos de emergencia
+
+## Tecnologías utilizadas
+* Expo Go
+* React Native
+* Firebase
+* GitHub
+
+## Dependencias
+
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-firebase/auth": "^23.4.1",
+    "@react-native-firebase/firestore": "^23.4.1",
+    "@react-native-firebase/functions": "^23.4.1",
+    "@react-native-firebase/messaging": "^23.4.1",
+    "@react-navigation/drawer": "^7.5.8",
+    "@react-navigation/native": "^7.1.17",
+    "@react-navigation/stack": "^7.4.7",
+    "expo": "^54.0.20",
+    "expo-image-picker": "~17.0.8",
+    "expo-location": "~19.0.7",
+    "expo-status-bar": "~3.0.8",
+    "firebase": "^12.4.0",
+    "react": "19.1.0",
+    "react-native": "^0.81.5",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-maps": "1.20.1",
+    "react-native-reanimated": "~4.1.1",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
+    "@babel/core": "^7.20.0",
+    "@react-native-community/cli": "^20.0.1"
+    "react-native-worklets": "0.5.1"
+
