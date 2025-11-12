@@ -43,7 +43,7 @@ const Drawer = createDrawerNavigator();
 // imagen de fondo de pantañña
 const BACKGROUND_IMAGE = require('../assets/Temis_Fondo.png');
 
-// Componente del Drawer Content personalizado mejorado
+// Componente del Drawer Content 
 function CustomDrawerContent(props) {
   const [activeRoute, setActiveRoute] = useState('Main');
   const [userName, setUserName] = useState('');
@@ -99,7 +99,7 @@ function CustomDrawerContent(props) {
 
   return (
     <SafeAreaView style={drawerStyles.container}>
-      {/* Header mejorado */}
+      {/* Header */}
       <View style={drawerStyles.drawerHeader}>
         <View style={drawerStyles.logoContainer}>
           <View style={drawerStyles.logo}>
@@ -111,7 +111,7 @@ function CustomDrawerContent(props) {
           </View>
         </View>
 
-        {/* User Info */}
+        {/* Info de usuario */}
         <View style={drawerStyles.userInfo}>
           <View style={drawerStyles.userAvatar}>
             <Ionicons name="person" size={18} color="#49688d" />
@@ -127,7 +127,7 @@ function CustomDrawerContent(props) {
         </View>
       </View>
 
-      {/* Menu Items */}
+      {/* Menu */}
       <ScrollView
         style={drawerStyles.menuContainer}
         showsVerticalScrollIndicator={false}
@@ -161,7 +161,7 @@ function CustomDrawerContent(props) {
         ))}
       </ScrollView>
 
-      {/* Footer mejorado */}
+      {/* Footer */}
       <View style={drawerStyles.drawerFooter}>
         <View style={drawerStyles.footerContent}>
           <Text style={drawerStyles.footerText}>¿Necesitas ayuda?</Text>
@@ -183,7 +183,6 @@ function CustomDrawerContent(props) {
   );
 }
 
-// Navigator del Drawer mejorado
 function DrawerNavigator() {
   return (
     <Drawer.Navigator
@@ -275,10 +274,8 @@ function Login({ navigation }) {
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, update last login and navigate to main app
         updateLastLogin(user.uid);
         navigation.navigate('Drawer');
       }
@@ -304,7 +301,6 @@ function Login({ navigation }) {
       return;
     }
 
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       Alert.alert('Error', 'Por favor ingresa un correo electrónico válido');
@@ -322,11 +318,8 @@ function Login({ navigation }) {
 
       const user = userCredential.user;
 
-      // Update last login time
       await updateLastLogin(user.uid);
 
-      // Navigate to main app - the auth state listener will handle this
-      // but we can also navigate here for immediate feedback
       navigation.navigate('Drawer');
 
     } catch (error) {
@@ -390,20 +383,20 @@ function Login({ navigation }) {
       <SafeAreaView style={styles.safeArea}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.keyboardAvoidingContainer} // Usar el nuevo estilo para el KAV
+          style={styles.keyboardAvoidingContainer} 
         >
           <ScrollView
             contentContainerStyle={styles.scrollContainer}
             showsVerticalScrollIndicator={false}
           >
-            {/* Header Section */}
+            {/* Header */}
             <View style={styles.header}>
               <Text style={styles.titulo}>TEMIS</Text>
               <View style={styles.titleUnderline} />
               <Text style={styles.texto}>Bienvenid@</Text>
             </View>
 
-            {/* Login Form */}
+            {/* Login Formulario */}
             <View style={styles.inputContainer}>
               <View style={styles.inputWrapper}>
                 <Ionicons name="mail-outline" size={20} color="#7f8c8d" style={styles.inputIcon} />
@@ -445,7 +438,7 @@ function Login({ navigation }) {
               </TouchableOpacity>
             </View>
 
-            {/* Login Button */}
+            {/* Login boton */}
             <TouchableOpacity
               style={[styles.loginButton, loading && styles.disabledButton]}
               onPress={handleLogin}
@@ -458,7 +451,7 @@ function Login({ navigation }) {
               )}
             </TouchableOpacity>
 
-            {/* Register Link */}
+            {/* Link de registro */}
             <TouchableOpacity
               style={[styles.registerLink, loading && styles.disabledLink]}
               onPress={() => navigation.navigate('Register')}
@@ -471,7 +464,7 @@ function Login({ navigation }) {
 
 
 
-            <StatusBar style='light' /> {/* Cambiado a light para contraste */}
+            <StatusBar style='light' />
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -498,7 +491,7 @@ export default function App() {
   );
 }
 
-// Estilos del Drawer mejorados
+// Estilos del Drawer 
 const drawerStyles = StyleSheet.create({
   container: {
     flex: 1,
