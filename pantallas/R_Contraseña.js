@@ -12,7 +12,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 
-// 1. Importar funciones de Firebase
+// Importar funciones de Firebase
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase'; // Asume que 'auth' está exportado de './firebase'
 
@@ -36,7 +36,7 @@ export default function R_Contraseña({ navigation }) {
         setLoading(true); // Mostrar indicador de carga
 
         try {
-            // 2. Llamada a la función de Firebase para enviar el correo
+            // Llamada a la función de Firebase para enviar el correo
             await sendPasswordResetEmail(auth, email.toLowerCase().trim());
 
             Alert.alert(
@@ -52,7 +52,7 @@ export default function R_Contraseña({ navigation }) {
 
             let errorMessage = 'Hubo un error al intentar enviar el correo. Por favor, verifica la dirección.';
 
-            // 3. Manejo de errores específicos
+            // Manejo de errores específicos
             if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
                 // Por seguridad, damos un mensaje genérico.
                 errorMessage = 'Si la cuenta existe, recibirás un correo en breve con las instrucciones.';
@@ -112,11 +112,9 @@ export default function R_Contraseña({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    // ... tus estilos (titulo, subtitulo, inputContainer, input, loginLink, loginText)
 
-    // Estilos nuevos o modificados
     recoveryButton: {
-        backgroundColor: '#49688d', // Cambié el color para que coincida con tu estilo general
+        backgroundColor: '#49688d', 
         borderRadius: 8,
         padding: 15,
         alignItems: 'center',
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     disabledButton: {
-        backgroundColor: '#cccccc', // Estilo para cuando el botón está deshabilitado
+        backgroundColor: '#cccccc', 
     },
     // ... el resto de tus estilos
     container: {
@@ -168,7 +166,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     loginText: {
-        color: '#49688d', // Color actualizado
+        color: '#49688d', 
         fontSize: 16,
     },
 });
